@@ -10,15 +10,16 @@ body {
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
 }
 
 .canvas_container {
   position: relative;
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   border-radius: 4px;
   overflow: hidden;
-  background-color: #10ac84;
+  cursor: pointer;
 }
 
 #canvas_grid,
