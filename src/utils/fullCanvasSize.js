@@ -12,7 +12,6 @@ export default function fullCanvasBox(canvas, highDefinition = true) {
 
   canvas.width = width
   canvas.height = height
-  canvas.isHighDefinition = highDefinition
 
   return highDefinition ? ratio : undefined
 }
