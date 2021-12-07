@@ -1,2 +1,1 @@
-# mine-sweeper
-Canvas写扫雷
+Canvas井字游戏
