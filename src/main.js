@@ -18,8 +18,8 @@ const canvasGrid = document.querySelector('#canvas_grid')
 const canvasCell = document.querySelector('#canvas_cell')
 
 // step-0 设置画布像素宽高
-const ratio = fullCanvasBox(canvasGrid, false)
-fullCanvasBox(canvasCell, false)
+const ratio = fullCanvasBox(canvasGrid)
+fullCanvasBox(canvasCell)
 
 // 获取2d画布渲染对象
 const gridCtx = canvasGrid.getContext('2d')
