@@ -58,10 +58,10 @@ function onCellClick(cellItem) {
     p2.add(cellItem)
   }
 
-  const { p1Finish, p2Finish } = state
+  const { p1Finish, p2Finish, allSize } = state
   state.isGameOver = p1Finish || p2Finish
 
-  if (state.p1Size + state.p2Size === 9) {
+  if (allSize === 9 && !state.isGameOver) {
     state.isGameOver = true
     cell.gameOver('even')
     return

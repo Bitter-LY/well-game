@@ -11,6 +11,10 @@ export default class GameState {
     return this.p2.size
   }
 
+  get allSize() {
+    return this.p1Size + this.p2Size
+  }
+
   get p1Finish() {
     return this._isEnd(this.p1)
   }
@@ -33,31 +37,48 @@ export default class GameState {
     if (set.size === 0 || set.size < 3) return false
 
     const arr = Array.from(set).map((e) => e.position)
-    const cellStrPosition = new Set()
 
-    const countX = {}
-    const countY = {}
+    // 斜着的情况
+    const [skewRightCount, skewLeftCount] = arr.reduce(
+      (data, cur) => {
+        const [x, y] = cur
 
-    arr.forEach((c) => {
-      const [x, y] = c
-      cellStrPosition.add(x + '_' + y)
-      countX[x] = (countX[x] || 0) + 1
-      countY[y] = (countY[y] || 0) + 1
-    })
+        if (x - y === 0) data[1] += 1
+        if (x + y === 2) data[0] += 1
 
-    if (
-      Object.values(countX).some((v) => v >= 3) ||
-      Object.values(countY).some((v) => v >= 3)
-    ) {
-      return true
+        return data
+      },
+      [0, 0]
+    )
+
+    if (skewRightCount === 3 || skewLeftCount === 3) return true
+
+    // 水平或垂直的情况
+    const sortX = arr.sort((a, b) => a[0] - b[0])
+    const sortY = arr.sort((a, b) => a[1] - b[1])
+    let rowCount = 1
+    let colCount = 1
+
+    function deep(startIndex = 1) {
+      rowCount = 1
+      colCount = 1
+
+      for (let i = startIndex; i < startIndex + 2; i++) {
+        const pre = sortX[i - 1]
+        const cur = sortX[i]
+
+        if (!pre || !cur) {
+          return rowCount === 3 || colCount === 3
+        }
+
+        if (pre[1] === cur[1]) rowCount += 1
+        if (sortY[i - 1][0] === sortY[i][0]) colCount += 1
+      }
+
+      if (rowCount === 3 || colCount === 3) return true
+      return deep(++startIndex)
     }
 
-    const cellTrue1 = ['0_0', '1_1', '2_2']
-    const cellTrue2 = ['2_0', '1_1', '0_2']
-
-    return (
-      cellTrue1.every((i) => cellStrPosition.has(i)) ||
-      cellTrue2.every((i) => cellStrPosition.has(i))
-    )
+    return deep()
   }
 }
