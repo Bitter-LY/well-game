@@ -55,7 +55,7 @@ export default class GameState {
 
     // 水平或垂直的情况
     const sortX = arr.sort((a, b) => a[0] - b[0])
-    const sortY = arr.sort((a, b) => a[1] - b[1])
+    const sortY = JSON.parse(JSON.stringify(arr)).sort((a, b) => a[1] - b[1])
     let rowCount = 1
     let colCount = 1
 
@@ -64,15 +64,15 @@ export default class GameState {
       colCount = 1
 
       for (let i = startIndex; i < startIndex + 2; i++) {
-        const pre = sortX[i - 1]
-        const cur = sortX[i]
+        const pre = sortY[i - 1]
+        const cur = sortY[i]
 
         if (!pre || !cur) {
           return rowCount === 3 || colCount === 3
         }
 
         if (pre[1] === cur[1]) rowCount += 1
-        if (sortY[i - 1][0] === sortY[i][0]) colCount += 1
+        if (sortX[i - 1][0] === sortX[i][0]) colCount += 1
       }
 
       if (rowCount === 3 || colCount === 3) return true
