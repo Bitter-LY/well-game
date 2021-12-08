@@ -141,7 +141,6 @@ export default class Cell {
 
       const { x, y } = windowToCanvas(canvas, e.clientX, e.clientY)
       const target = this.cellItems.find((c) => c.contain(x, y))
-      console.log(x, y);
 
       if (!(target instanceof CellItem)) return
       if (target.isRendered) return
